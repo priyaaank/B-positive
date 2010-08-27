@@ -8,6 +8,5 @@
     <uses-library android:name="android.test.runner" />
     </application>
     <uses-sdk android:minSdkVersion="4" />
-    <instrumentation android:targetPackage="com.barefoot.bpositive" android:name="android.test.InstrumentationTestRunner" />
     <instrumentation android:label="All Tests" android:name="com.barefoot.bpositive.test.MyBPositiveAllTestRunner" android:targetPackage="com.barefoot.bpositive"/>
 </manifest> 
