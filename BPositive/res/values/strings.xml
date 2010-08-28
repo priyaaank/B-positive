@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Dashboard!</string>
     <string name="app_name">BPositive</string>
+    <string name="create_sqls">
+    	CREATE TABLE DONORS ( id integer primary key, first_name String, last_name String, age String, blood_groupd String, creation_date Date);
+    </string>
 </resources>
