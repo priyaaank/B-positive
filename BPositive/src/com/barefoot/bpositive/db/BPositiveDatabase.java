@@ -27,6 +27,7 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		Log.e(LOG_TAG, "Creating BPositive database for first time");
 		String[] creationSqls = mContext.getString(R.string.create_sqls).split("\n");
 		db.beginTransaction();
 		try {
@@ -48,7 +49,7 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(LOG_TAG, "Upgrading database from version "
+		Log.d(LOG_TAG, "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
 
