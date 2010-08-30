@@ -55,10 +55,10 @@ public class BPositiveDatabaseTest extends ActivityInstrumentationTestCase2<Dash
 	}
 	
 	public void tearDown() throws Exception {
-		dbCleanup("DROP TABLE IF EXISTS DONORS;");
+		dbCleanup("DELETE FROM DONORS;");
 		
 		try {
-			//to compress the unused space and clean pages left after dropping tables
+			//to compress the unused space and clean pages left after cleaning tables
 			db.execSQL("VACUUM;");
 		} catch(SQLException sqle) {
 			fail();

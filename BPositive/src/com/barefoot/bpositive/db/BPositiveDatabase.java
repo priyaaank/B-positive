@@ -78,7 +78,8 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 				dbValues.put("last_name", newDonor.getLastName());
 				dbValues.put("birth_date", newDonor.getBirthDate());
 				dbValues.put("blood_group", newDonor.getBloodGroup());
-				getWritableDatabase().insertOrThrow(DONOR_TABLE, "creation_date", dbValues);
+				long id = getWritableDatabase().insertOrThrow(DONOR_TABLE, "creation_date", dbValues);
+				newDonor.setId(id);
 			} catch(SQLException sqle) {
 				Log.e(LOG_TAG, "Could not create new donor. Exception is :" + sqle.getMessage());
 			}
@@ -87,6 +88,28 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 	}
 
 	private boolean donorExists(Donor newDonor) {
+		if (newDonor != null) {
+			Cursor c = null;
+			String count_query = "Select count(*) from donors where first_name = ? and last_name = ? and blood_group = ? and birth_date = ?";
+			try {
+				c = getReadableDatabase().rawQuery(count_query, new String[]{newDonor.getFirstName(), 
+																		 newDonor.getLastName(), 
+																		 newDonor.getBloodGroup(),
+																		 newDonor.getBirthDate()});
+				if(c != null && c.moveToFirst() && c.getInt(0) > 0)
+					return true;
+			} catch(SQLException sqle) {
+				Log.e(LOG_TAG, "Encountered error while fetching donor record existence. Error is :" + sqle.getMessage());
+			} finally {
+				if (c != null) {
+					try {
+						c.close();
+					} catch (SQLException e) {
+					}
+				}
+			}
+		}
+		
 		return false;
 	}
 
@@ -111,8 +134,8 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 			}
 		}
 		
-		private int getDonorId() {
-			return getInt(getColumnIndexOrThrow("id"));
+		private long getDonorId() {
+			return getLong(getColumnIndexOrThrow("id"));
 		}
 		
 		private String getFirstName() {
