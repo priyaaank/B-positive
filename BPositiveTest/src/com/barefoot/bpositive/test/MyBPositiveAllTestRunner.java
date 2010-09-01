@@ -7,6 +7,7 @@ import android.test.InstrumentationTestSuite;
 import com.barefoot.bpositive.db.test.BPositiveDatabaseTest;
 import com.barefoot.bpositive.db.test.DonorTableTest;
 import com.barefoot.bpositive.models.test.DonorTest;
+import com.barefoot.bpositive.models.test.FitnessTest;
 
 public class MyBPositiveAllTestRunner extends InstrumentationTestRunner {
 
@@ -17,10 +18,10 @@ public class MyBPositiveAllTestRunner extends InstrumentationTestRunner {
 		testSuite.addTestSuite(DashboardTest.class);
 		testSuite.addTestSuite(BPositiveDatabaseTest.class);
 		testSuite.addTestSuite(DonorTest.class);
+		testSuite.addTestSuite(FitnessTest.class);
 		testSuite.addTestSuite(DonorTableTest.class);
 		return testSuite;
 	}
-	
 	
 	@Override
 	public ClassLoader getLoader() {

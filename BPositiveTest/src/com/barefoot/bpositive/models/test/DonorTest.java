@@ -8,10 +8,6 @@ public class DonorTest extends TestCase {
 	
 	private Donor testDonor;
 	
-	public void setUp() throws Exception {
-		
-	}
-	
 	public void testDonorObjectAttributesGettersSetters() {
 		testDonor = new Donor(-1, "First", "Last", "24/07/1982", "O+");
 		assertNotNull(testDonor);
@@ -22,10 +18,6 @@ public class DonorTest extends TestCase {
 		assertEquals(0, testDonor.getAge());
 		testDonor.setId(12);
 		assertEquals(12, testDonor.getId());
-	}
-	
-	public void tearDown() throws Exception {
-		
 	}
 
 }
