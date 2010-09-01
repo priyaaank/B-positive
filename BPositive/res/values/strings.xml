@@ -3,5 +3,6 @@
     <string name="app_name">BPositive</string>
     <string name="create_sqls">
     	CREATE TABLE DONORS ( id integer primary key, first_name String, last_name String, birth_date String, blood_group String, creation_date Date);
+    	CREATE TABLE FITNESS ( id integer primary key, blood_pressure String, blood_pressure_unit String, weight integer, weight_unit String, donor_id integer, creation_date Date FOREIGN KEY (donors_id) REFERENCES donors(id));
     </string>
 </resources>
