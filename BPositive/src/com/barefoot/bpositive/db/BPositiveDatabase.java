@@ -1,5 +1,8 @@
 package com.barefoot.bpositive.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -129,7 +132,6 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 			public Cursor newCursor(SQLiteDatabase db,
 					SQLiteCursorDriver driver, String editTable,
 					SQLiteQuery query) {
-				// TODO Auto-generated method stub
 				return new DonorCursor(db, driver, editTable, query);
 			}
 		}
@@ -162,4 +164,39 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 							  getBloodGroup());
 		}
 	}
+
+	public List<Donor> findDonorByName(String firstName, String lastName) {
+		return findDonors(DonorCursor.NAME_QUERY, new String[] {firstName, lastName});
+	}
+
+	public List<Donor> findDonorById(long id) {
+		String id_string = Long.toString(id);
+		return findDonors(DonorCursor.ID_QUERY, new String[] {id_string});
+	}
+
+	public List<Donor> findAllDonors() {
+		return findDonors(DonorCursor.ALL_QUERY, null);
+	}
+	
+	protected List<Donor> findDonors(String query, String[] params) {
+		Cursor donorCursor = null;
+		List<Donor> donorList = new ArrayList<Donor>();
+		try {
+			donorCursor = getReadableDatabase().rawQueryWithFactory(new DonorCursor.Factory(), query, params, null);
+			if(donorCursor != null && donorCursor.moveToFirst()) {
+				do {
+					donorList.add(((DonorCursor)donorCursor).getDonor());
+				} while(donorCursor.moveToNext());
+			}
+		} catch(SQLException sqle) {
+			Log.e(LOG_TAG, "Could not look up the donor with params "+ params +". The error is: "+ sqle.getMessage());
+		}
+		finally {
+			if(!donorCursor.isClosed()) {
+				donorCursor.close();
+			}
+		}
+		return donorList;
+	}
+	
 }

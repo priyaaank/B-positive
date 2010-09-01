@@ -54,6 +54,40 @@ public class BPositiveDatabaseTest extends ActivityInstrumentationTestCase2<Dash
 		}
 	}
 	
+	public void testSelectionOfDonorByName() {
+		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		try {
+			testDBInstance.createNewDonor(newDonor);
+		} catch(Exception e) {
+			fail();
+		}
+		
+		Donor fetchedDonor = (testDBInstance.findDonorByName(newDonor.getFirstName(), newDonor.getLastName())).get(0);
+		assertEquals(newDonor.getFirstName(), fetchedDonor.getFirstName());
+		assertEquals(newDonor.getLastName(), fetchedDonor.getLastName());
+		assertEquals(newDonor.getAge(), fetchedDonor.getAge());
+		assertEquals(newDonor.getBloodGroup(), fetchedDonor.getBloodGroup());
+		assertEquals(newDonor.getBirthDate(), fetchedDonor.getBirthDate());
+	}
+
+	public void testSelectionOfDonorById() {
+		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		long id = -1;
+		try {
+			id = (testDBInstance.createNewDonor(newDonor)).getId();
+		} catch(Exception e) {
+			fail();
+		}
+		
+		Donor fetchedDonor = (testDBInstance.findDonorById(id)).get(0);
+		assertEquals(newDonor.getFirstName(), fetchedDonor.getFirstName());
+		assertEquals(newDonor.getLastName(), fetchedDonor.getLastName());
+		assertEquals(newDonor.getAge(), fetchedDonor.getAge());
+		assertEquals(newDonor.getBloodGroup(), fetchedDonor.getBloodGroup());
+		assertEquals(newDonor.getBirthDate(), fetchedDonor.getBirthDate());
+		assertEquals(id, fetchedDonor.getId());
+	}
+	
 	public void tearDown() throws Exception {
 		dbCleanup("DELETE FROM DONORS;");
 		
