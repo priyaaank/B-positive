@@ -6,8 +6,6 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.barefoot.bpositive.Dashboard;
 import com.barefoot.bpositive.db.BPositiveDatabase;
-import com.barefoot.bpositive.exceptions.DonorExistsException;
-import com.barefoot.bpositive.models.Donor;
 
 public class BPositiveDatabaseTest extends ActivityInstrumentationTestCase2<Dashboard> {
 
@@ -20,72 +18,11 @@ public class BPositiveDatabaseTest extends ActivityInstrumentationTestCase2<Dash
 	
 	public void setUp() throws Exception {
 		testDBInstance = new BPositiveDatabase(getActivity(), "BPOSITIVE_TEST");
-		db = testDBInstance.getWritableDatabase(); 
+		db = testDBInstance.getWritableDatabase();
 	}
 	
 	public void testDatabaseCreatedSuccessfully() {
 		assertNotNull(db);
-	}
-	
-	public void testCreationOfDonorProfile() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		try {
-			newDonor = testDBInstance.createNewDonor(newDonor);
-		} catch (DonorExistsException dee) {
-			fail();
-		}
-		assertNotSame(-1, newDonor.getId());
-	}
-	
-	public void testFailureForDuplicateProfile() {
-		Donor duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		try {
-			testDBInstance.createNewDonor(duplicateDonor);
-		} catch(DonorExistsException dee) {
-			//Do Nothing
-		}
-		
-		duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		try {
-			testDBInstance.createNewDonor(duplicateDonor);
-			fail();
-		} catch(DonorExistsException dee) {
-			//If exception is thrown then this spec is successful
-		}
-	}
-	
-	public void testSelectionOfDonorByName() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		try {
-			testDBInstance.createNewDonor(newDonor);
-		} catch(Exception e) {
-			fail();
-		}
-		
-		Donor fetchedDonor = (testDBInstance.findDonorByName(newDonor.getFirstName(), newDonor.getLastName())).get(0);
-		assertEquals(newDonor.getFirstName(), fetchedDonor.getFirstName());
-		assertEquals(newDonor.getLastName(), fetchedDonor.getLastName());
-		assertEquals(newDonor.getAge(), fetchedDonor.getAge());
-		assertEquals(newDonor.getBloodGroup(), fetchedDonor.getBloodGroup());
-		assertEquals(newDonor.getBirthDate(), fetchedDonor.getBirthDate());
-	}
-
-	public void testSelectionOfDonorById() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		long id = -1;
-		try {
-			id = (testDBInstance.createNewDonor(newDonor)).getId();
-		} catch(Exception e) {
-			fail();
-		}
-		
-		Donor fetchedDonor = (testDBInstance.findDonorById(id)).get(0);
-		assertEquals(newDonor.getFirstName(), fetchedDonor.getFirstName());
-		assertEquals(newDonor.getLastName(), fetchedDonor.getLastName());
-		assertEquals(newDonor.getAge(), fetchedDonor.getAge());
-		assertEquals(newDonor.getBloodGroup(), fetchedDonor.getBloodGroup());
-		assertEquals(newDonor.getBirthDate(), fetchedDonor.getBirthDate());
-		assertEquals(id, fetchedDonor.getId());
 	}
 	
 	public void tearDown() throws Exception {

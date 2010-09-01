@@ -1,11 +1,12 @@
 package com.barefoot.bpositive.test;
 
-import com.barefoot.bpositive.db.test.BPositiveDatabaseTest;
-import com.barefoot.bpositive.models.test.DonorTest;
-
 import junit.framework.TestSuite;
 import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
+
+import com.barefoot.bpositive.db.test.BPositiveDatabaseTest;
+import com.barefoot.bpositive.db.test.DonorTableTest;
+import com.barefoot.bpositive.models.test.DonorTest;
 
 public class MyBPositiveAllTestRunner extends InstrumentationTestRunner {
 
@@ -16,6 +17,7 @@ public class MyBPositiveAllTestRunner extends InstrumentationTestRunner {
 		testSuite.addTestSuite(DashboardTest.class);
 		testSuite.addTestSuite(BPositiveDatabaseTest.class);
 		testSuite.addTestSuite(DonorTest.class);
+		testSuite.addTestSuite(DonorTableTest.class);
 		return testSuite;
 	}
 	
