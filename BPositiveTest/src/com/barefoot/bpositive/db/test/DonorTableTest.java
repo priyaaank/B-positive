@@ -1,5 +1,7 @@
 package com.barefoot.bpositive.db.test;
 
+import java.util.List;
+
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
@@ -86,6 +88,22 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 		assertEquals(newDonor.getBloodGroup(), fetchedDonor.getBloodGroup());
 		assertEquals(newDonor.getBirthDate(), fetchedDonor.getBirthDate());
 		assertEquals(id, fetchedDonor.getId());
+	}
+
+	public void testSelectionOfAllDonors() {
+		Donor newDonorOne = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		Donor newDonorTwo = new Donor(-1, "John","Gosling","24-07-1981","B+");
+		try {
+			newDonorOne = donorTable.create(newDonorOne);
+			newDonorTwo = donorTable.create(newDonorTwo);
+		} catch(Exception e) {
+			fail();
+		}
+		
+		List<Donor> fetchedDonorList = donorTable.findAll();
+		assertEquals(2, fetchedDonorList.size());
+		assertEquals(newDonorOne, fetchedDonorList.get(0));
+		assertEquals(newDonorTwo, fetchedDonorList.get(1));
 	}
 	
 	public void tearDown() throws Exception {

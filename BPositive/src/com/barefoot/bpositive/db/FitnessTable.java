@@ -1,5 +1,6 @@
 package com.barefoot.bpositive.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -29,6 +30,7 @@ public class FitnessTable implements Table<Fitness> {
 
 		private static final String ID_QUERY = "SELECT id, weight, weight_unit, blood_pressure, blood_pressure_unit, donor_id, creation_date FROM fitness WHERE id = ? ORDER BY creation_date desc";
 		private static final String DONOR_QUERY = "SELECT id, weight, weight_unit, blood_pressure, blood_pressure_unit, donor_id, creation_date FROM fitness WHERE donor_id = ? ORDER BY creation_date desc";
+		private static final String ALL_QUERY = "SELECT id, weight, weight_unit, blood_pressure, blood_pressure_unit, donor_id, creation_date FROM fitness ORDER BY creation_date desc";
 
 		public FitnessCursor(SQLiteDatabase db, SQLiteCursorDriver driver,
 				String editTable, SQLiteQuery query) {
@@ -84,10 +86,14 @@ public class FitnessTable implements Table<Fitness> {
 			dbValues.put("blood_pressure_unit", newFitnessRecord.getBloodPressureUnit());
 			dbValues.put("donor_id", newFitnessRecord.getDonorId());
 			
+			database.getWritableDatabase().beginTransaction();
 			try {
 				newFitnessRecord.setId(database.getWritableDatabase().insert(FITNESS_TABLE, "", dbValues));
+				database.getWritableDatabase().setTransactionSuccessful();
 			} catch (SQLException sqle) {
 				Log.e(LOG_TAG, "Tried creating a new fitness record, could not create it for donor id "+newFitnessRecord.getDonorId()+". Error is :" + sqle.getMessage());
+			} finally {
+				database.getWritableDatabase().endTransaction();
 			}
 		}
 		
@@ -96,26 +102,47 @@ public class FitnessTable implements Table<Fitness> {
 
 	@Override
 	public boolean exists(Fitness element) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<Fitness> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return find(FitnessCursor.ALL_QUERY, null);
 	}
 
 	@Override
 	public Fitness findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String fitnessIdString = Long.toString(id);
+		return (find(FitnessCursor.ID_QUERY, new String[] {fitnessIdString})).get(0);
 	}
 
+	public List<Fitness> findAllByDonorId(long donorId) {
+		String donorIdString = Long.toString(donorId);
+		return find(FitnessCursor.DONOR_QUERY, new String[] {donorIdString});
+	}
+	
 	@Override
 	public String getTableName() {
-		// TODO Auto-generated method stub
-		return null;
+		return FITNESS_TABLE;
+	}
+	
+	protected List<Fitness> find(String query, String[] params) {
+		List<Fitness> fitnessRecordsList = new ArrayList<Fitness>();
+		FitnessCursor c = null;
+		
+		try {
+			c = (FitnessCursor)database.getReadableDatabase().rawQueryWithFactory(new FitnessCursor.Factory(), query, params, null);
+			if(c != null && c.moveToFirst()) {
+				do {
+					fitnessRecordsList.add(c.getFitness());
+				} while(c.moveToNext());
+			}
+			
+		} catch (SQLException sqle) {
+			Log.e(LOG_TAG,"Tried fetching list of fitness records for query [" + query + "] and params ["+ params.toString() +"]. Error is "+ sqle.getMessage());
+		}
+		
+		return fitnessRecordsList;
 	}
 
 }

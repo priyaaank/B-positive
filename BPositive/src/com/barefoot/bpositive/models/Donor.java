@@ -58,4 +58,18 @@ public class Donor {
 		return donor.toString();
 	}
 
+	@Override
+	public boolean equals(Object objectToCompare) {
+		if(!(objectToCompare instanceof Donor)) {
+			return false;
+		}
+		Donor object = (Donor)objectToCompare;
+		return this.getBirthDate().equals(object.getBirthDate()) &&
+			   this.getBloodGroup().equals(object.getBloodGroup()) &&
+			   this.getFirstName().equals(getFirstName()) &&
+			   this.getLastName().equals(object.getLastName()) &&
+			   this.getAge() == object.getAge() &&
+			   this.getId() == object.getId();
+	}
+
 }

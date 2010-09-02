@@ -28,7 +28,7 @@ public class BPositiveDatabase extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.e(LOG_TAG, "Creating BPositive database for first time");
-		String[] creationSqls = mContext.getString(R.string.create_sqls).split("\n");
+		String[] creationSqls = mContext.getString(R.string.create_sqls).split(";");
 		db.beginTransaction();
 		try {
 			executeManySqlStatements(db, creationSqls);

@@ -148,6 +148,7 @@ public class DonorTable implements Table<Donor> {
 						+ "] already exists in database");
 			}
 
+			bPositiveDatabase.getWritableDatabase().beginTransaction();
 			try {
 				ContentValues dbValues = new ContentValues();
 				dbValues.put("first_name", newDonor.getFirstName());
@@ -157,9 +158,12 @@ public class DonorTable implements Table<Donor> {
 				long id = bPositiveDatabase.getWritableDatabase().insertOrThrow(getTableName(),
 						"creation_date", dbValues);
 				newDonor.setId(id);
+				bPositiveDatabase.getWritableDatabase().setTransactionSuccessful();
 			} catch (SQLException sqle) {
 				Log.e(LOG_TAG, "Could not create new donor. Exception is :"
 						+ sqle.getMessage());
+			} finally {
+				bPositiveDatabase.getWritableDatabase().endTransaction();
 			}
 		}
 		return newDonor;

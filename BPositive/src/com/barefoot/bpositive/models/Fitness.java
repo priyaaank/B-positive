@@ -66,5 +66,19 @@ public class Fitness {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+	
+	@Override 
+	public boolean equals(Object objectToCompare) {
+		if(!(objectToCompare instanceof Fitness)) {
+			return false;
+		}
+		Fitness object = (Fitness)objectToCompare;
+		return this.bloodPressure.equals(object.getBloodPressure()) &&
+			   this.bloodPressureUnit.equals(object.getBloodPressureUnit()) &&
+			   this.weight == object.weight &&
+			   this.weightUnit.equals(object.weightUnit) &&
+			   this.donorId == object.donorId &&
+			   this.id == object.id;
+	}
 
 }
