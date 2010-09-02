@@ -2,20 +2,23 @@ package com.barefoot.bpositive.db;
 
 import java.util.List;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQuery;
+import android.util.Log;
 
-import com.barefoot.bpositive.db.DonorTable.DonorCursor;
 import com.barefoot.bpositive.exceptions.RecordExistsException;
-import com.barefoot.bpositive.models.Donor;
 import com.barefoot.bpositive.models.Fitness;
 
 public class FitnessTable implements Table<Fitness> {
 
+	private static final String FITNESS_TABLE = "FITNESS";
+	private static final String LOG_TAG = "FITNESS_TABLE";
 	private SQLiteOpenHelper database; 
 	
 	public FitnessTable(SQLiteOpenHelper database) {
@@ -72,9 +75,23 @@ public class FitnessTable implements Table<Fitness> {
 	}
 	
 	@Override
-	public Fitness create(Fitness newElement) throws RecordExistsException {
-		// TODO Auto-generated method stub
-		return null;
+	public Fitness create(Fitness newFitnessRecord) throws RecordExistsException {
+		if (newFitnessRecord != null) {
+			ContentValues dbValues = new ContentValues();
+			dbValues.put("weight", newFitnessRecord.getWeight());
+			dbValues.put("weight_unit", newFitnessRecord.getWeightUnit());
+			dbValues.put("blood_pressure", newFitnessRecord.getBloodPressure());
+			dbValues.put("blood_pressure_unit", newFitnessRecord.getBloodPressureUnit());
+			dbValues.put("donor_id", newFitnessRecord.getDonorId());
+			
+			try {
+				newFitnessRecord.setId(database.getWritableDatabase().insert(FITNESS_TABLE, "", dbValues));
+			} catch (SQLException sqle) {
+				Log.e(LOG_TAG, "Tried creating a new fitness record, could not create it for donor id "+newFitnessRecord.getDonorId()+". Error is :" + sqle.getMessage());
+			}
+		}
+		
+		return newFitnessRecord;
 	}
 
 	@Override

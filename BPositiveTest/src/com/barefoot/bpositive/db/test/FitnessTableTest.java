@@ -9,6 +9,7 @@ import com.barefoot.bpositive.db.BPositiveDatabase;
 import com.barefoot.bpositive.db.DonorTable;
 import com.barefoot.bpositive.db.FitnessTable;
 import com.barefoot.bpositive.db.Table;
+import com.barefoot.bpositive.exceptions.RecordExistsException;
 import com.barefoot.bpositive.models.Donor;
 import com.barefoot.bpositive.models.Fitness;
 
@@ -33,7 +34,18 @@ public class FitnessTableTest extends ActivityInstrumentationTestCase2<Dashboard
 	}
 	
 	public void testCreationOfNewFitnessRecord() {
+		Fitness fitnessRecord = new Fitness(-1, "120/80", "mmHg", 30, "KG", testDonor.getId());
 		
+		try {
+			fitnessRecord = fitnessTable.create(fitnessRecord);
+		} catch (RecordExistsException e) {
+			fail();
+		}
+		
+		assertNotSame(-1, fitnessRecord.getId());
+		assertNotSame("120/80 mmHg", fitnessRecord.getBloodPressureWithUnit());
+		assertNotSame("30 KG", fitnessRecord.getWeightUnit());
+		assertNotSame(testDonor.getId(), fitnessRecord.getDonorId());
 	}
 		
 	public void tearDown() throws Exception {
