@@ -5,10 +5,10 @@ public class Fitness {
 	private String bloodPressureUnit = "mmHg";
 	private String weightUnit = "KGs";
 	private String bloodPressure = "-1";
+	private Donor donor;
 	private int weight = -1;
 	private long donorId;
 	private long id;
-	
 
 	public Fitness(long id, String bloodPressure, String bloodPressureUnit, int weight, String weightUnit, long donorId) {
 		this.id = id;
@@ -67,6 +67,14 @@ public class Fitness {
 		this.weight = weight;
 	}
 	
+	public Donor getDonor() {
+		return donor;
+	}
+
+	public void setDonor(Donor donor) {
+		this.donor = donor;
+	}
+
 	@Override 
 	public boolean equals(Object objectToCompare) {
 		if(!(objectToCompare instanceof Fitness)) {
@@ -81,4 +89,6 @@ public class Fitness {
 			   this.id == object.id;
 	}
 
+	
+	
 }

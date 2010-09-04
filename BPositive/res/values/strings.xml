@@ -4,5 +4,6 @@
     <string name="create_sqls">
     	CREATE TABLE DONORS ( id integer primary key, first_name String, last_name String, birth_date String, blood_group String, creation_date Date);
     	CREATE TABLE FITNESS ( id integer primary key, blood_pressure String, blood_pressure_unit String, weight integer, weight_unit String, donor_id integer REFERENCES donors(id), creation_date Date);
+    	CREATE TABLE DONATIONS ( id integer primary key, place String, donation_date Date, type String, organiser String, donor_id integer REFERENCES donors(id), fitness_id integer REFERENCES fitness(id), creation_date Date);
     </string>
 </resources>
