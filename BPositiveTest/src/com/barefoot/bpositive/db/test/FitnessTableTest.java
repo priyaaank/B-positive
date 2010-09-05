@@ -26,6 +26,7 @@ public class FitnessTableTest extends ActivityInstrumentationTestCase2<Dashboard
 		super("com.barefoot.bpositive", Dashboard.class);
 	}
 	
+	@Override
 	public void setUp() throws Exception {
 		testDBInstance = new BPositiveDatabase(getActivity(), "BPOSITIVE_TEST");
 		fitnessTable = new FitnessTable(testDBInstance);
@@ -99,7 +100,8 @@ public class FitnessTableTest extends ActivityInstrumentationTestCase2<Dashboard
 		
 		assertEquals(fitnessRecord, fetchedFitnessRecord);
 	}
-		
+
+	@Override
 	public void tearDown() throws Exception {
 		dbCleanup("DELETE FROM FITNESS;");
 		dbCleanup("DELETE FROM DONORS;");

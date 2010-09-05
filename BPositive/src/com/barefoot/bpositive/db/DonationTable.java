@@ -3,6 +3,7 @@ package com.barefoot.bpositive.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteCursor;
@@ -15,13 +16,13 @@ import android.util.Log;
 import com.barefoot.bpositive.exceptions.RecordExistsException;
 import com.barefoot.bpositive.models.Donation;
 
-public class DonationsTable implements Table<Donation> {
+public class DonationTable implements Table<Donation> {
 	
 	private static String TABLE_NAME = "DONATIONS";
 	private SQLiteOpenHelper bPositiveDatabase;
-	private static String LOG_TAG = "DonationsTable";
+	private static String LOG_TAG = "DonationTable";
 	
-	public DonationsTable(SQLiteOpenHelper database) {
+	public DonationTable(SQLiteOpenHelper database) {
 		bPositiveDatabase = database;
 	}
 
@@ -29,6 +30,7 @@ public class DonationsTable implements Table<Donation> {
 
 		private static final String ALL_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donors ORDER BY creation_date desc";
 		private static final String ID_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donations WHERE id = ? ORDER BY creation_date desc";
+		private static final String DONOR_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donations WHERE donor_id = ? ORDER BY creation_date desc";
 
 		public DonationCursor(SQLiteDatabase db, SQLiteCursorDriver driver,
 				String editTable, SQLiteQuery query) {
@@ -116,7 +118,27 @@ public class DonationsTable implements Table<Donation> {
 
 	@Override
 	public Donation create(Donation newDonation) throws RecordExistsException {
-		return null;
+		if (newDonation != null) {
+			ContentValues dbValues = new ContentValues();
+			dbValues.put("place", newDonation.getPlace());
+			dbValues.put("donation_date", newDonation.getDate());
+			dbValues.put("type", newDonation.getType());
+			dbValues.put("organiser", newDonation.getOrganiser());
+			dbValues.put("donor_id", newDonation.getDonorId());
+			dbValues.put("fitness_id", newDonation.getFitnessId());
+			
+			bPositiveDatabase.getWritableDatabase().beginTransaction();
+			try {
+				newDonation.setId(bPositiveDatabase.getWritableDatabase().insert(TABLE_NAME, "", dbValues));
+				bPositiveDatabase.getWritableDatabase().setTransactionSuccessful();
+			} catch (SQLException sqle) {
+				Log.e(LOG_TAG, "Tried creating a new fitness record, could not create it for donor id "+newDonation.getDonorId()+". Error is :" + sqle.getMessage());
+			} finally {
+				bPositiveDatabase.getWritableDatabase().endTransaction();
+			}
+		}
+		
+		return newDonation;
 	}
 
 	@Override
@@ -127,5 +149,10 @@ public class DonationsTable implements Table<Donation> {
 	@Override
 	public boolean exists(Donation element) {
 		return false;
+	}
+
+	public List<Donation> findAllByDonorId(long id) {
+		String donorIdString = Long.toString(id);
+		return findDonations(DonationCursor.DONOR_QUERY, new String[]{donorIdString});
 	}
 }

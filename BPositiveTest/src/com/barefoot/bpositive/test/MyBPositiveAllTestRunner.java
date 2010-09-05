@@ -5,6 +5,7 @@ import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
 
 import com.barefoot.bpositive.db.test.BPositiveDatabaseTest;
+import com.barefoot.bpositive.db.test.DonationTableTest;
 import com.barefoot.bpositive.db.test.DonorTableTest;
 import com.barefoot.bpositive.db.test.FitnessTableTest;
 import com.barefoot.bpositive.models.test.DonationTest;
@@ -24,6 +25,7 @@ public class MyBPositiveAllTestRunner extends InstrumentationTestRunner {
 		testSuite.addTestSuite(DonationTest.class);
 		testSuite.addTestSuite(DonorTableTest.class);
 		testSuite.addTestSuite(FitnessTableTest.class);
+		testSuite.addTestSuite(DonationTableTest.class);
 		return testSuite;
 	}
 	
