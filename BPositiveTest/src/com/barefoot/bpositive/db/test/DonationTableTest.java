@@ -42,23 +42,23 @@ public class DonationTableTest extends ActivityInstrumentationTestCase2<Dashboar
 		testFitness = fitnessTable.create(new Fitness(-1, "120/80","mmHg",28,"KG", testDonor.getId()));
 	}
 	
-//	public void testCreationOfNewDonationRecord() {
-//		Donation donationRecord = new Donation(-1, "12/12/2010", "Berlin", "Blood Bank","Donation", testFitness.getId(), testDonor.getId()); 
-//		
-//		try {
-//			donationRecord = donationTable.create(donationRecord);
-//		} catch (RecordExistsException e) {
-//			fail();
-//		}
-//		
-//		assertNotSame(-1, donationRecord.getId());
-//		assertEquals("Blood Bank", donationRecord.getOrganiser());
-//		assertEquals("Donation", donationRecord.getType());
-//		assertEquals("Berlin", donationRecord.getPlace());
-//		assertEquals(testFitness.getId(), donationRecord.getFitnessId());
-//		assertEquals(testDonor.getId(), donationRecord.getDonorId());
-//		assertEquals("12/12/2010", donationRecord.getDate());
-//	}
+	public void testCreationOfNewDonationRecord() {
+		Donation donationRecord = new Donation(-1, "12/12/2010", "Berlin", "Blood Bank","Donation", testFitness.getId(), testDonor.getId()); 
+		
+		try {
+			donationRecord = donationTable.create(donationRecord);
+		} catch (RecordExistsException e) {
+			fail();
+		}
+		
+		assertNotSame(-1, donationRecord.getId());
+		assertEquals("Blood Bank", donationRecord.getOrganiser());
+		assertEquals("Donation", donationRecord.getType());
+		assertEquals("Berlin", donationRecord.getPlace());
+		assertEquals(testFitness.getId(), donationRecord.getFitnessId());
+		assertEquals(testDonor.getId(), donationRecord.getDonorId());
+		assertEquals("12/12/2010", donationRecord.getDate());
+	}
 
 	public void testLookupOfDonationsWithDonorId() {
 		Donation donationRecordOne = new Donation(-1, "12/12/2008", "Chicago", "Chicago Blood Bank","Donation", testFitness.getId(), testDonor.getId());
@@ -74,41 +74,41 @@ public class DonationTableTest extends ActivityInstrumentationTestCase2<Dashboar
 		List<Donation> donationRecords = ((DonationTable)donationTable).findAllByDonorId(testDonor.getId());
 		
 		assertEquals(2, donationRecords.size());
-		assertEquals(donationRecordOne, donationRecords.get(1));
+		assertEquals(donationRecordTwo, donationRecords.get(1));
 		assertEquals(donationRecordOne, donationRecords.get(0));
 	}
 	
-//	public void testLookupOfAllDonationRecords() {
-//		Donation donationRecordOne = new Donation(-1, "12/12/2008", "Chicago", "Chicago Blood Bank","Donation", testFitness.getId(), testDonor.getId());
-//		Donation donationRecordTwo = new Donation(-1, "12/12/2010", "Berlin", "Berlin Blood Bank","Donation", testFitness.getId(), testDonor.getId());
-//		
-//		try {
-//			donationRecordOne = donationTable.create(donationRecordOne);
-//			donationRecordTwo = donationTable.create(donationRecordTwo);
-//		} catch (RecordExistsException e) {
-//			fail();
-//		}
-//		
-//		List<Donation> donationRecords = donationTable.findAll();
-//		
-//		assertEquals(2, donationRecords.size());
-//		assertEquals(donationRecordOne, donationRecords.get(1));
-//		assertEquals(donationRecordOne, donationRecords.get(0));
-//	}
-//
-//	public void testLookupOfDonationRecordById() {
-//		Donation donationRecord = new Donation(-1, "12/12/2008", "Chicago", "Chicago Blood Bank","Donation", testFitness.getId(), testDonor.getId());
-//		
-//		try {
-//			donationRecord = donationTable.create(donationRecord);
-//		} catch (RecordExistsException e) {
-//			fail();
-//		}
-//		
-//		Donation fetchedDonationRecord = donationTable.findById(donationRecord.getId());
-//		
-//		assertEquals(donationRecord, fetchedDonationRecord);
-//	}
+	public void testLookupOfAllDonationRecords() {
+		Donation donationRecordOne = new Donation(-1, "12/12/2008", "Chicago", "Chicago Blood Bank","Donation", testFitness.getId(), testDonor.getId());
+		Donation donationRecordTwo = new Donation(-1, "12/12/2010", "Berlin", "Berlin Blood Bank","Donation", testFitness.getId(), testDonor.getId());
+		
+		try {
+			donationRecordOne = donationTable.create(donationRecordOne);
+			donationRecordTwo = donationTable.create(donationRecordTwo);
+		} catch (RecordExistsException e) {
+			fail();
+		}
+		
+		List<Donation> donationRecords = donationTable.findAll();
+		
+		assertEquals(2, donationRecords.size());
+		assertEquals(donationRecordTwo, donationRecords.get(1));
+		assertEquals(donationRecordOne, donationRecords.get(0));
+	}
+
+	public void testLookupOfDonationRecordById() {
+		Donation donationRecord = new Donation(-1, "12/12/2008", "Chicago", "Chicago Blood Bank","Donation", testFitness.getId(), testDonor.getId());
+		
+		try {
+			donationRecord = donationTable.create(donationRecord);
+		} catch (RecordExistsException e) {
+			fail();
+		}
+		
+		Donation fetchedDonationRecord = donationTable.findById(donationRecord.getId());
+		
+		assertEquals(donationRecord, fetchedDonationRecord);
+	}
 		
 	@Override
 	public void tearDown() throws Exception {

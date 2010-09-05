@@ -88,7 +88,7 @@ public class FitnessTable implements Table<Fitness> {
 			
 			database.getWritableDatabase().beginTransaction();
 			try {
-				newFitnessRecord.setId(database.getWritableDatabase().insert(FITNESS_TABLE, "", dbValues));
+				newFitnessRecord.setId(database.getWritableDatabase().insert(FITNESS_TABLE, "creation_date", dbValues));
 				database.getWritableDatabase().setTransactionSuccessful();
 			} catch (SQLException sqle) {
 				Log.e(LOG_TAG, "Tried creating a new fitness record, could not create it for donor id "+newFitnessRecord.getDonorId()+". Error is :" + sqle.getMessage());

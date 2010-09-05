@@ -28,7 +28,7 @@ public class DonationTable implements Table<Donation> {
 
 	private static class DonationCursor extends SQLiteCursor {
 
-		private static final String ALL_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donors ORDER BY creation_date desc";
+		private static final String ALL_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donations ORDER BY creation_date desc";
 		private static final String ID_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donations WHERE id = ? ORDER BY creation_date desc";
 		private static final String DONOR_QUERY = "SELECT id, place, donation_date, type, organiser, donor_id, fitness_id, creation_date FROM donations WHERE donor_id = ? ORDER BY creation_date desc";
 
@@ -129,7 +129,7 @@ public class DonationTable implements Table<Donation> {
 			
 			bPositiveDatabase.getWritableDatabase().beginTransaction();
 			try {
-				newDonation.setId(bPositiveDatabase.getWritableDatabase().insert(TABLE_NAME, "", dbValues));
+				newDonation.setId(bPositiveDatabase.getWritableDatabase().insert(TABLE_NAME, "creation_date", dbValues));
 				bPositiveDatabase.getWritableDatabase().setTransactionSuccessful();
 			} catch (SQLException sqle) {
 				Log.e(LOG_TAG, "Tried creating a new fitness record, could not create it for donor id "+newDonation.getDonorId()+". Error is :" + sqle.getMessage());
