@@ -32,6 +32,7 @@ public class DonorTable implements Table<Donor> {
 		private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM donors ORDER BY creation_date desc";
 		private static final String NAME_QUERY = "SELECT "+ FIELD_LIST +" FROM donors WHERE first_name = ? and last_name = ? ORDER BY creation_date desc";
 		private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM donors WHERE id = ? ORDER BY creation_date desc";
+		public static final String PRIMARY_QUERY = "SELECT "+ FIELD_LIST +" FROM donors WHERE is_primary = 1";
 
 		public DonorCursor(SQLiteDatabase db, SQLiteCursorDriver driver,
 				String editTable, SQLiteQuery query) {
@@ -145,6 +146,11 @@ public class DonorTable implements Table<Donor> {
 		return (donorList == null || donorList.isEmpty()) ? null : donorList.get(0);
 	}
 
+	public Donor findPrimary() {
+		List<Donor> donors = findDonors(DonorCursor.PRIMARY_QUERY, null);
+		return (donors == null || donors.isEmpty()) ? null : donors.get(0);
+	}
+
 	@Override
 	public Donor create(Donor newDonor) throws RecordExistsException {
 		if (newDonor != null) {
@@ -153,7 +159,7 @@ public class DonorTable implements Table<Donor> {
 						+ "] already exists in database");
 			}
 			
-			if (primaryExists()) {
+			if (newDonor.isPrimary() && primaryExists()) {
 				throw new RecordExistsException("Primary Donor already exists.");
 			}
 

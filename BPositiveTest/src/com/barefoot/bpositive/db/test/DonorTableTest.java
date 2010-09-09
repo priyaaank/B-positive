@@ -121,6 +121,20 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 		assertEquals(-1, fakePrimaryDonor.getId());
 	}
 	
+	public void testSelectionOfPrimaryDonor() {
+		Donor primaryDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",1);
+		Donor nonPrimaryDonor = new Donor(-1, "John","wilton","24-12-1981","B+",0);
+		try {
+			primaryDonor = donorTable.create(primaryDonor);
+			nonPrimaryDonor = donorTable.create(nonPrimaryDonor);
+		} catch(RecordExistsException e) {
+			fail();
+		}
+		
+		Donor fetchedPrimaryDonor = ((DonorTable)donorTable).findPrimary();
+		assertEquals(primaryDonor, fetchedPrimaryDonor);
+	}
+	
 	public void tearDown() throws Exception {
 		dbCleanup("DELETE FROM DONORS;");
 		
