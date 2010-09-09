@@ -1,5 +1,7 @@
 package com.barefoot.bpositive.models;
 
+import java.util.List;
+
 
 public class Donor {
 	
@@ -9,6 +11,8 @@ public class Donor {
 	private String bloodGroup;
 	private long id;
 	private int primary = 0;
+	private List<Fitness> fitnesses;
+	private List<Donation> donations;
 
 	public Donor(long id, String firstName, String lastName, String birthDate, String bloodGroup, int primary) {
 		this.id = id;
@@ -33,6 +37,20 @@ public class Donor {
 	public String getLastName() {
 		return this.lastName;
 	}
+	
+	public String getFullName() {
+		StringBuffer fullName = new StringBuffer(" ");
+		if(firstName != null && firstName.trim().length() > 0) {
+			fullName.append(firstName);
+			fullName.append(" ");
+		}
+		if(lastName != null && lastName.trim().length() > 0) {
+			fullName.append(lastName);
+		}
+		
+		return fullName.toString().trim();
+	}
+	
 	public String getBirthDate() {
 		return this.birthDate;
 	}
@@ -90,4 +108,19 @@ public class Donor {
 			   this.getId() == object.getId();
 	}
 
+	public void setFitnesses(List<Fitness> fitnessRecords) {
+		this.fitnesses = fitnessRecords;
+	}
+	
+	public List<Fitness> getFitnesses() {
+		return this.fitnesses;
+	}
+
+	public void setDonations(List<Donation> donationRecords) {
+		this.donations = donationRecords; 
+	}
+
+	public List<Donation> getDonations() {
+		return this.donations;
+	}
 }

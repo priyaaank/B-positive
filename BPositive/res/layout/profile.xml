@@ -39,7 +39,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 				android:id="@+id/donor_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Aplha Dog Roger" 
+				android:text="" 
 				android:lineSpacingExtra="10dp"
 				android:textSize="20sp">
 				</TextView>
@@ -47,7 +47,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 				android:id="@+id/donor_birth_date"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="18 August '82"
+				android:text=""
 				android:lineSpacingExtra="15dp" 
 				android:textSize="20sp">
 				</TextView>
@@ -55,67 +55,78 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 				android:id="@+id/donor_blood_group"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="O Negative"
+				android:text=""
 				android:lineSpacingExtra="15dp"
 				android:textSize="20sp">
 				</TextView>
 			</LinearLayout>
 		</RelativeLayout>
-		<LinearLayout
-		android:id="@+id/bar_outer"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="#404040" 
-		android:layout_marginTop="10dp">
-			<LinearLayout
-			android:id="@+id/bar_inner"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:orientation="vertical"
-			android:layout_marginTop="2dp"
-			android:layout_marginLeft="2dp"
-			android:layout_marginRight="2dp"
-			android:layout_marginBottom="2dp"
-			android:background="#000000">	
-				<TextView
-				android:id="@+id/donor_birth_date"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_toRightOf="@id/donor_info"
-				android:text="Blood Donation History"
-				android:layout_marginLeft="5dp"
-				android:textSize="14sp">
-				</TextView>
-			</LinearLayout>
-		</LinearLayout>
-	    		<LinearLayout
-		android:id="@+id/bar_outer"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="#404040" 
-		android:layout_marginTop="10dp">
-			<LinearLayout
-			android:id="@+id/bar_inner"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:orientation="vertical"
-			android:layout_marginTop="2dp"
-			android:layout_marginLeft="2dp"
-			android:layout_marginRight="2dp"
-			android:layout_marginBottom="2dp"
-			android:background="#000000">	
-				<TextView
-				android:id="@+id/donor_birth_date"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_toRightOf="@id/donor_info"
-				android:text="Fitness History"
-				android:layout_marginLeft="5dp"
-				android:textSize="14sp">
-				</TextView>
-			</LinearLayout>
-		</LinearLayout>
+		<include android:id="@+id/donation_history" layout="@layout/title_bar" />
+		<TableLayout android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:stretchColumns="0"
+	    android:layout_marginLeft="8dp"
+	    android:layout_marginRight="8dp">
+	    <TableRow>
+	        <TextView
+	            android:text="Date"
+	            android:textStyle="bold"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	         <TextView
+	            android:text="Organiser"
+	           	gravity="center_horizontal"
+	           	android:textStyle="bold"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Place"
+	           	android:textStyle="bold"
+	           	gravity="center_horizontal"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Type"
+	           	android:textStyle="bold"
+	           	gravity="center_horizontal"
+	            android:padding="3dip" />
+	    </TableRow>
+	
+	    <TableRow>
+	        <TextView
+	            android:text="24 Jul '10"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	         <TextView
+	            android:text="Blood Bank"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Bangalore"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Donation"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />	    
+	    </TableRow>
+	    <TableRow>
+	        <TextView
+	            android:text="11 Jan '10"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	         <TextView
+	            android:text="Hospital"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Pune"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />
+	        <TextView
+	            android:text="Emergency"
+	            gravity="center_horizontal"
+	            android:padding="3dip" />	    
+	    </TableRow>
+	</TableLayout>
+	<include android:id="@+id/fitness_history" layout="@layout/title_bar" />
 	</LinearLayout>
 </LinearLayout>
