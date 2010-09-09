@@ -38,7 +38,7 @@ public class DonationTableTest extends ActivityInstrumentationTestCase2<Dashboar
 		fitnessTable = new FitnessTable(testDBInstance);
 		db = testDBInstance.getWritableDatabase();
 		
-		testDonor = donorTable.create(new Donor(-1, "Jimmy","Hendrix","24-07-1982","B+"));
+		testDonor = donorTable.create(new Donor(-1, "Jimmy","Hendrix","24-07-1982","B+",0));
 		testFitness = fitnessTable.create(new Fitness(-1, "120/80","mmHg",28,"KG", testDonor.getId()));
 	}
 	

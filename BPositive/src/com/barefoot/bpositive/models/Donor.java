@@ -8,13 +8,15 @@ public class Donor {
 	private String birthDate;
 	private String bloodGroup;
 	private long id;
+	private int primary = 0;
 
-	public Donor(long id, String firstName, String lastName, String birthDate, String bloodGroup) {
+	public Donor(long id, String firstName, String lastName, String birthDate, String bloodGroup, int primary) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 		this.bloodGroup = bloodGroup;
+		this.primary = primary;
 	}
 	
 	public long getId() {
@@ -38,6 +40,18 @@ public class Donor {
 		return this.bloodGroup;
 	}
 	
+	public boolean isPrimary() {
+		return (this.primary == 1);
+	}
+	
+	public void setPrimary(int primary) {
+		this.primary = primary;
+	}
+
+	public void setPrimary(boolean primary) {
+		this.primary = primary ? 1 : 0 ;
+	}
+	
 	public int getAge()  {
 		return 0;
 	}
@@ -55,6 +69,9 @@ public class Donor {
 		donor.append(" ");
 		donor.append("Blood Group");
 		donor.append(getBloodGroup());
+		donor.append(" ");
+		donor.append("Is Primary");
+		donor.append(isPrimary());
 		return donor.toString();
 	}
 
@@ -69,6 +86,7 @@ public class Donor {
 			   this.getFirstName().equals(getFirstName()) &&
 			   this.getLastName().equals(object.getLastName()) &&
 			   this.getAge() == object.getAge() &&
+			   this.isPrimary() == object.isPrimary() &&
 			   this.getId() == object.getId();
 	}
 

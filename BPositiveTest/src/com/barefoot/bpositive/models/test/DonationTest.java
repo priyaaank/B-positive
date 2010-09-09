@@ -42,7 +42,7 @@ public class DonationTest extends TestCase {
 	public void testEqualizationOfDonation() {
 		Donation donation = new Donation(12, "12/12/2010", "Chicago", "Blood Bank", "Donation", 12, 11);
 		Donation duplicateDonation = new Donation(12, "12/12/2010", "Chicago", "Blood Bank", "Donation", 12, 11);
-		assertFalse(donation.equals(new Donor(12, "Jon", "Canary", "03/07/1977", "B+")));
+		assertFalse(donation.equals(new Donor(12, "Jon", "Canary", "03/07/1977", "B+",0)));
 		assertTrue(donation.equals(duplicateDonation));
 		assertTrue(donation.equals(donation));
 		duplicateDonation.setOrganiser("random");

@@ -33,7 +33,7 @@ public class FitnessTableTest extends ActivityInstrumentationTestCase2<Dashboard
 		donorTable = new DonorTable(testDBInstance);
 		db = testDBInstance.getWritableDatabase();
 		
-		testDonor = donorTable.create(new Donor(-1, "Jimmy","Hendrix","24-07-1982","B+"));
+		testDonor = donorTable.create(new Donor(-1, "Jimmy","Hendrix","24-07-1982","B+",0));
 	}
 	
 	public void testCreationOfNewFitnessRecord() {

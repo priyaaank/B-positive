@@ -88,7 +88,4 @@ public class Fitness {
 			   this.donorId == object.donorId &&
 			   this.id == object.id;
 	}
-
-	
-	
 }

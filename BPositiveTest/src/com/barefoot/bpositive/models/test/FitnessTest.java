@@ -9,7 +9,7 @@ public class FitnessTest extends TestCase {
 	
 	public void testGetterAndSettersForFitness() {
 		Fitness fitness = new Fitness(-1, "120/80","mmHg",80,"Kgs",12);
-		Donor donor = new Donor(12, "Jon", "Lame", "24/07/1982", "B+");
+		Donor donor = new Donor(12, "Jon", "Lame", "24/07/1982", "B+", 0);
 		assertEquals(80, fitness.getWeight());
 		assertEquals("80 Kgs", fitness.getWeightWithUnit());
 		assertEquals("120/80", fitness.getBloodPressure());
@@ -35,7 +35,7 @@ public class FitnessTest extends TestCase {
 	public void testEqualizationOfFitness() {
 		Fitness fitness = new Fitness(12, "120/80", "mmHg",30, "KG", 1);
 		Fitness duplicateFitness = new Fitness(12, "120/80", "mmHg",30, "KG", 1);
-		assertFalse(fitness.equals(new Donor(12, "Jon", "Canary", "03/07/1977", "B+")));
+		assertFalse(fitness.equals(new Donor(12, "Jon", "Canary", "03/07/1977", "B+",0)));
 		assertTrue(fitness.equals(duplicateFitness));
 		assertTrue(fitness.equals(fitness));
 		duplicateFitness.setBloodPressure("112/70");

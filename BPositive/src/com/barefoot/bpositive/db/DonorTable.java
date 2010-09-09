@@ -28,9 +28,10 @@ public class DonorTable implements Table<Donor> {
 
 	private static class DonorCursor extends SQLiteCursor {
 
-		private static final String ALL_QUERY = "SELECT id, first_name, last_name, birth_date, blood_group, creation_date FROM donors ORDER BY creation_date desc";
-		private static final String NAME_QUERY = "SELECT id, first_name, last_name, birth_date, blood_group, creation_date FROM donors WHERE first_name = ? and last_name = ? ORDER BY creation_date desc";
-		private static final String ID_QUERY = "SELECT id, first_name, last_name, birth_date, blood_group, creation_date FROM donors WHERE id = ? ORDER BY creation_date desc";
+		private static final String FIELD_LIST = " id, first_name, last_name, birth_date, blood_group, creation_date, is_primary ";
+		private static final String ALL_QUERY = "SELECT "+ FIELD_LIST +" FROM donors ORDER BY creation_date desc";
+		private static final String NAME_QUERY = "SELECT "+ FIELD_LIST +" FROM donors WHERE first_name = ? and last_name = ? ORDER BY creation_date desc";
+		private static final String ID_QUERY = "SELECT "+ FIELD_LIST +" FROM donors WHERE id = ? ORDER BY creation_date desc";
 
 		public DonorCursor(SQLiteDatabase db, SQLiteCursorDriver driver,
 				String editTable, SQLiteQuery query) {
@@ -66,9 +67,13 @@ public class DonorTable implements Table<Donor> {
 			return getString(getColumnIndexOrThrow("blood_group"));
 		}
 
+		private int isPrimary() {
+			return getInt(getColumnIndexOrThrow("is_primary"));
+		}	
+
 		public Donor getDonor() {
 			return new Donor(getDonorId(), getFirstName(), getLastName(),
-					getBirthDate(), getBloodGroup());
+					getBirthDate(), getBloodGroup(), isPrimary());
 		}
 	}
 
@@ -147,6 +152,10 @@ public class DonorTable implements Table<Donor> {
 				throw new RecordExistsException("Donor [" + newDonor.toString()
 						+ "] already exists in database");
 			}
+			
+			if (primaryExists()) {
+				throw new RecordExistsException("Primary Donor already exists.");
+			}
 
 			bPositiveDatabase.getWritableDatabase().beginTransaction();
 			try {
@@ -155,6 +164,7 @@ public class DonorTable implements Table<Donor> {
 				dbValues.put("last_name", newDonor.getLastName());
 				dbValues.put("birth_date", newDonor.getBirthDate());
 				dbValues.put("blood_group", newDonor.getBloodGroup());
+				dbValues.put("is_primary", newDonor.isPrimary() ? 1 : 0);
 				long id = bPositiveDatabase.getWritableDatabase().insertOrThrow(getTableName(),
 						"creation_date", dbValues);
 				newDonor.setId(id);
@@ -167,6 +177,31 @@ public class DonorTable implements Table<Donor> {
 			}
 		}
 		return newDonor;
+	}
+
+	private boolean primaryExists() {
+		Cursor c = null;
+		String count_query = "Select count(*) from donors where is_primary = 1";
+		try {
+			c = bPositiveDatabase.getReadableDatabase().rawQuery(
+					count_query,
+					null);
+			if (c != null && c.moveToFirst() && c.getInt(0) > 0)
+				return true;
+		} catch (SQLException sqle) {
+			Log.e(LOG_TAG,
+					"Encountered error while fetching donor record existence. Error is :"
+							+ sqle.getMessage());
+		} finally {
+			if (c != null) {
+				try {
+					c.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	@Override

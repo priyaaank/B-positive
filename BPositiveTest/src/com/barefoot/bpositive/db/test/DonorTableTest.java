@@ -30,7 +30,7 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 	}
 	
 	public void testCreationOfDonorProfile() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
 		try {
 			newDonor = donorTable.create(newDonor);
 		} catch (RecordExistsException dee) {
@@ -40,14 +40,14 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 	}
 	
 	public void testFailureForDuplicateProfile() {
-		Donor duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		Donor duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
 		try {
 			donorTable.create(duplicateDonor);
 		} catch(RecordExistsException dee) {
 			//Do Nothing
 		}
 		
-		duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		duplicateDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
 		try {
 			donorTable.create(duplicateDonor);
 			fail();
@@ -57,7 +57,7 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 	}
 	
 	public void testSelectionOfDonorByName() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
 		try {
 			donorTable.create(newDonor);
 		} catch(Exception e) {
@@ -73,7 +73,7 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 	}
 
 	public void testSelectionOfDonorById() {
-		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+");
+		Donor newDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
 		long id = -1;
 		try {
 			id = (donorTable.create(newDonor)).getId();
@@ -91,8 +91,8 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 	}
 
 	public void testSelectionOfAllDonors() {
-		Donor newDonorOne = new Donor(-1, "John","Cusak","24-07-1982","O+");
-		Donor newDonorTwo = new Donor(-1, "John","Gosling","24-07-1981","B+");
+		Donor newDonorOne = new Donor(-1, "John","Cusak","24-07-1982","O+",0);
+		Donor newDonorTwo = new Donor(-1, "John","Gosling","24-07-1981","B+",0);
 		try {
 			newDonorOne = donorTable.create(newDonorOne);
 			newDonorTwo = donorTable.create(newDonorTwo);
@@ -104,6 +104,21 @@ public class DonorTableTest extends ActivityInstrumentationTestCase2<Dashboard> 
 		assertEquals(2, fetchedDonorList.size());
 		assertEquals(newDonorOne, fetchedDonorList.get(0));
 		assertEquals(newDonorTwo, fetchedDonorList.get(1));
+	}
+	
+	public void testThatTwoPrimaryDonorsCannotBeCreated() {
+		Donor realPrimaryDonor = new Donor(-1, "John","Cusak","24-07-1982","O+",1);
+		Donor fakePrimaryDonor = new Donor(-1, "James","Dean","24-07-1981","B+",1);
+		try {
+			realPrimaryDonor = donorTable.create(realPrimaryDonor);
+			fakePrimaryDonor = donorTable.create(fakePrimaryDonor);
+			fail();
+		} catch(RecordExistsException e) {
+			//Pass
+		}
+		
+		assertNotSame(-1, realPrimaryDonor.getId());
+		assertEquals(-1, fakePrimaryDonor.getId());
 	}
 	
 	public void tearDown() throws Exception {
