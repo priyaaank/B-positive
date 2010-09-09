@@ -15,12 +15,15 @@ public final class R {
         public static final int snap=0x7f020001;
     }
     public static final class id {
-        public static final int donor_birth_date=0x7f050005;
-        public static final int donor_blood_group=0x7f050006;
-        public static final int donor_details=0x7f050003;
-        public static final int donor_info=0x7f050001;
-        public static final int donor_name=0x7f050004;
-        public static final int donor_photo=0x7f050002;
+        public static final int bar_inner=0x7f050009;
+        public static final int bar_outer=0x7f050008;
+        public static final int donor_birth_date=0x7f050006;
+        public static final int donor_blood_group=0x7f050007;
+        public static final int donor_details=0x7f050004;
+        public static final int donor_info=0x7f050002;
+        public static final int donor_name=0x7f050005;
+        public static final int donor_photo=0x7f050003;
+        public static final int info_page=0x7f050001;
         public static final int widget28=0x7f050000;
     }
     public static final class layout {

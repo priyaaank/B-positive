@@ -2,51 +2,120 @@
 <LinearLayout
 android:id="@+id/widget28"
 android:layout_width="fill_parent"
-android:layout_height="fill_parent"
+android:layout_height="wrap_content"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
-	<RelativeLayout
-	android:id="@+id/donor_info"
+	<LinearLayout
+	android:id="@+id/info_page"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-		<ImageView
-		android:id="@+id/donor_photo"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:src="@drawable/snap"
-		android:fadingEdge="vertical"
-		android:paddingRight="10dp"
-		android:paddingLeft="8dp"
-		android:paddingTop="8dp" 
-		android:fadingEdgeLength="10dp" 
-		android:maxHeight="50sp">
-		</ImageView>
-		
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	>
+		<RelativeLayout
+		android:id="@+id/donor_info"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+			<ImageView
+			android:id="@+id/donor_photo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/snap"
+			android:fadingEdge="vertical"
+			android:paddingRight="10dp"
+			android:paddingLeft="8dp"
+			android:paddingTop="8dp" 
+			android:maxHeight="50sp">
+			</ImageView>
+			
+			<LinearLayout
+			android:id="@+id/donor_details"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/donor_photo" 
+			android:gravity="left" 
+			android:orientation="vertical" 
+			android:paddingTop="15dp" android:paddingLeft="5dp">
+				<TextView
+				android:id="@+id/donor_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Aplha Dog Roger" 
+				android:lineSpacingExtra="10dp"
+				android:textSize="20sp">
+				</TextView>
+				<TextView
+				android:id="@+id/donor_birth_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="18 August '82"
+				android:lineSpacingExtra="15dp" 
+				android:textSize="20sp">
+				</TextView>
+				<TextView
+				android:id="@+id/donor_blood_group"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="O Negative"
+				android:lineSpacingExtra="15dp"
+				android:textSize="20sp">
+				</TextView>
+			</LinearLayout>
+		</RelativeLayout>
 		<LinearLayout
-		android:id="@+id/donor_details"
-		android:layout_width="wrap_content"
+		android:id="@+id/bar_outer"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_toRightOf="@+id/donor_photo" android:gravity="left" android:orientation="vertical" android:paddingTop="15dp" android:paddingLeft="20dp">
-			<TextView
-			android:id="@+id/donor_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="Aplha Dog Roger" android:lineSpacingExtra="10dp" android:textSize="20sp">
-			</TextView>
-			<TextView
-			android:id="@+id/donor_birth_date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="18 August '82"
-			android:lineSpacingExtra="15dp" android:textSize="20sp">
-			</TextView>
-			<TextView
-			android:id="@+id/donor_blood_group"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="O Negative"
-			android:lineSpacingExtra="15dp" android:textSize="20sp">
-			</TextView>
+		android:orientation="vertical"
+		android:background="#404040" 
+		android:layout_marginTop="10dp">
+			<LinearLayout
+			android:id="@+id/bar_inner"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:layout_marginTop="2dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginBottom="2dp"
+			android:background="#000000">	
+				<TextView
+				android:id="@+id/donor_birth_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/donor_info"
+				android:text="Blood Donation History"
+				android:layout_marginLeft="5dp"
+				android:textSize="14sp">
+				</TextView>
+			</LinearLayout>
 		</LinearLayout>
-	</RelativeLayout>
+	    		<LinearLayout
+		android:id="@+id/bar_outer"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:background="#404040" 
+		android:layout_marginTop="10dp">
+			<LinearLayout
+			android:id="@+id/bar_inner"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:layout_marginTop="2dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginBottom="2dp"
+			android:background="#000000">	
+				<TextView
+				android:id="@+id/donor_birth_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/donor_info"
+				android:text="Fitness History"
+				android:layout_marginLeft="5dp"
+				android:textSize="14sp">
+				</TextView>
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
 </LinearLayout>
