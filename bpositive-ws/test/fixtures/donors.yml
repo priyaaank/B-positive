@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  bloodgroup: MyString
+  age: 
+  date_of_birth: 2011-01-20
+
+two:
+  name: MyString
+  bloodgroup: MyString
+  age: 
+  date_of_birth: 2011-01-20
